@@ -23,7 +23,7 @@ const App = () => {
 
                 {/* Contenido principal */}
                 <div
-                    className={`flex-1 p-4 overflow-y-auto transition-all duration-200 ${isSidebarOpen ? 'ml-64' : 'ml-0'
+                    className={`flex-1 p-4 overflow-y-auto transition-all duration-200 ${isSidebarOpen ? 'ml-[17%] ' : 'ml-0'
                         }`}
                 >
                     <h1 className="text-xl font-bold">Contenido Principal</h1>
