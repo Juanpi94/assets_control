@@ -8,6 +8,7 @@ const App = () => {
     // Estado para controlar si el Sidebar está abierto o cerrado
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    // Estado para almacenar los datos de los activos
     const [data, setData] = useState([
         {
             "plaqueados": [],
@@ -15,6 +16,7 @@ const App = () => {
         }
     ]);
 
+    // Actualizar los datos de los activos cuando se cargue la página
     useEffect(() => {
         setData([
             {
@@ -24,12 +26,6 @@ const App = () => {
         ]);
     }, [jsonData]);
 
-   /*  useEffect(() => {
-        if (data[0]) {
-            console.log(data[0].plaqueados);
-        }
-    }, [data]);
- */
     // Función para alternar el estado del Sidebar
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -51,12 +47,13 @@ console.log(jsonData);
                     className={`flex-1 p-4 overflow-y-auto transition-all duration-200 ${isSidebarOpen ? 'ml-[17%] ' : 'ml-0'
                         }`}
                         >
-                 
+                    {/* Rutas de la aplicación */}
                   <Routes>
-                    <Route path="/" element={<Home title={"Home"}  />} />
-                    <Route path="/plaqueados" element={<Home title={"Activos plaquiados"} data={data[0].plaqueados} />} />
-                    <Route path="/no-plaqueados" element={<Home title={"Activos no plaquiados"} data={data[0].noPlaqueados} />} />
+                    <Route path="/" element={<Home title={"Inicio"}  />} />
+                    <Route path="/plaqueados" element={<Home title={"Activos plaqueados"} data={data[0].plaqueados} />} />
+                    <Route path="/no-plaqueados" element={<Home title={"Activos no plaqueados"} data={data[0].noPlaqueados} />} />
                   </Routes> 
+                   {/* Fin rutas de la aplicación */}
        
                 </div>
                 {/* Termina el contenido principal */}
