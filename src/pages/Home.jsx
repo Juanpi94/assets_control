@@ -1,40 +1,38 @@
-import React from "react";
-import Table from "../components/table";
-import { useEffect } from 'react';
-import Buttom from "../components/Button";
-const Home = ({title, data}) => {
-    
-        
+import { useState } from "react";
+
+function Home() {
+    // let [action, setAction] = useState(true);
+    // let [message, setMessage] = useState("Apagado");
+
+    // const saySomething = () => {
+    //     if (action) {
+    //         setMessage("Encendido");
+    //         setAction(false);
+    //     } else {
+    //         setMessage("Apagado");
+    //         setAction(true);
+    //     }
+    // }
+
+    // JSX (JavaScript XML)
     return (
-        <div className="flex flex-col mx-4">
-            <h1 className="  text-3xl font-semibold text-gray-500  ">{title} </h1>
-            <div className="flex my-4 justify-between"> 
-                <Buttom  text={"Añadir"} Styles={"text-base px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"}  />
-                <div className="flex  ">
-                <Buttom  text={"Exportar visibles"} Styles={" text-base rounded-l-md px-4 py-2  bg-blue-600 text-white hover:bg-blue-700"}  />
-                <Buttom  text={"Exportar todos"} Styles={" text-base px-4 py-2  bg-blue-600 text-white hover:bg-blue-700 ml-[3px] "}  />
-                <Buttom  text={"Imprimir"} Styles={" text-base px-4 py-2 rounded-r-md bg-blue-600 text-white hover:bg-blue-700 ml-[3px]"}  />
-                </div>
+        <section className="h-full">
+            <div className="h-full flex flex-col items-center justify-center">
+                <h1 className="text-4xl font-bold text-blue-800">Bienvenido al sistema</h1>
+                <h2 className="text-3xl font-bold text-blue-600">de control de bienes universitarios</h2>
             </div>
-            <div className="flex gap-4 mb-4">
-                <div className="flex flex-col">
-                    <label htmlFor="" className=" font-semibold">Filtrar por:</label>
-                    <select name="" id="" className="border-2 border-gray-200 shadow-lg rounded-base px-4 py-2 w-[20rem] text-black h-full">
-                        <option value="Seleciona una opcion" selected> Selecione una opcion</option>
-                    </select>
-                </div>
-
-                <div className="flex flex-col">
-                    <label htmlFor="" className=" font-semibold">Buscar</label>
-                    <input type="text"  className="border-2 border-gray-200 shadow-lg rounded-base px-4 py-2  text-black  w-[40rem]"/>
-                </div>
+            {/* <div className=" p-2 h-[25%]">
+                <p className="text-2xl text-gray-400">Seleccione la opción a realizar</p>
             </div>
+            <div className="mt-2 flex flex-wrap gap-2">
+                <a href="plaqueados" className="block text-center bg-blue-700 p-2 rounded-lg shadow-sm">
+                    <h5 className="text-2xl font-bold tracking-tight pt-2 pb-2 text-white">Activos plaqueados</h5>
+                </a>
+                
+            </div> */}
+        </section>
 
-            <div className=" boder border-2 border-gray-200 shadow-lg rounded-lg">
-                <Table  data={data} />
-            </div>       
-        </div>
-    );
-    
-    }
-    export default Home;
+    )
+}
+
+export default Home;

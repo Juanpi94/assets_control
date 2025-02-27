@@ -17,12 +17,12 @@ const Sidebar = ({ isOpen }) => {
                     <DropdownMenu title="Activos">
                         <SidebarItem href="/plaqueados" title="Plaqueados" />
                         <SidebarItem href="/no-plaqueados" title="No plaqueados" />
-                        <SidebarItem title="Tipos" />
-                        <SidebarItem title="Subtipos" />
-                        <SidebarItem title="Marcas" />
-                        <SidebarItem title="Modelos" />
-                        <SidebarItem title="Compras" />
-                        <SidebarItem title="Redes" />
+                        <SidebarItem href="/tipos" title="Tipos" />
+                        <SidebarItem href="/subtipos" title="Subtipos" />
+                        <SidebarItem href="/marcas" title="Marcas" />
+                        <SidebarItem href="/modelos" title="Modelos" />
+                        <SidebarItem href="/compras" title="Compras" />
+                        <SidebarItem href="/redes" title="Redes" />
                     </DropdownMenu>
                     <DropdownMenu title="Trámites">
                         <SidebarItem title="Generar traslado" />
@@ -37,11 +37,11 @@ const Sidebar = ({ isOpen }) => {
 
                     <SidebarSection title="Administración" />
                     <DropdownMenu title="Gestión">
-                        <SidebarItem title="Funcionarios" />
-                        <SidebarItem title="Ubicaciones" />
-                        <SidebarItem title="Usuarios" />
-                        <SidebarItem title="Proveedores" />
-                        <SidebarItem title="Coordinaciones Universitarias" />
+                        <SidebarItem href="/ubicaciones" title="Ubicaciones" />
+                        <SidebarItem href="/funcionarios" title="Funcionarios" />
+                        <SidebarItem href="/usuarios" title="Usuarios" />
+                        <SidebarItem href="/proveedores" title="Proveedores" />
+                        <SidebarItem href="/coordinaciones" title="Coordinaciones Universitarias" />
                     </DropdownMenu>
                     <DropdownMenu title="Importar">
                         <SidebarItem title="Activos plaqueados" />
