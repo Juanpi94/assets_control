@@ -32,12 +32,7 @@ const Container = ({ title, endpoint }) => {
         fetchData(); // Recargar los datos después de eliminar un post
     };
 
-    console.log(title);
-    console.log(endpoint);
-    console.log(data);
-
     if (loading) return <div>Loading...</div>;
-    // if (error) return <div>Error: {error.message}</div>;
 
     return (
         <div className="flex flex-col mx-4">
@@ -50,31 +45,8 @@ const Container = ({ title, endpoint }) => {
                     <Button text={"Imprimir"} Styles={"text-base px-4 py-2 rounded-r-md bg-blue-600 text-white hover:bg-blue-700 ml-[3px]"} />
                 </div>
             </div>
-            <div className="flex gap-4 mb-4">
-                <div className="flex flex-col">
-                    <label htmlFor="" className="font-semibold">Filtrar por:</label>
-                    <select name="" id="" className="border-2 border-gray-200 shadow-lg rounded-base px-4 py-2 w-[20rem] text-black h-full">
-                        {/* <option value="" disabled selected>Seleccione una opción</option> */}
-                        {data && data.length > 0 ? (
-                            Object.keys(data[0]).map((key, index) => (
-                                <option key={index} value={key} selected={key === "id"} disabled={key === "id"}>
-                                    {key !== "id" ? key : "Seleccione una opción"}
-                                </option>
-                            ))
-                        ) : (
-                            <option value="" selected disabled>Sin filtros disponibles</option>
-                        )}
 
-                    </select>
-                </div>
-
-                <div className="flex flex-col">
-                    <label htmlFor="" className="font-semibold">Buscar</label>
-                    <input type="text" className="border-2 border-gray-200 shadow-lg rounded-base px-4 py-2 text-black w-[40rem]" />
-                </div>
-            </div>
-
-            <div className="border-2 border-gray-200 shadow-lg rounded-lg">
+            <div className="border-2 mt-3 border-gray-200 shadow-lg rounded-lg">
                 <Table data={data} />
             </div>
         </div>

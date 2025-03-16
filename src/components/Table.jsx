@@ -1,77 +1,38 @@
-import DataTable from 'react-data-table-component';
+import { DataGrid } from "@mui/x-data-grid";
+import { esES } from "@mui/x-data-grid/locales";
+import Paper from "@mui/material/Paper";
 
 const Table = ({ data }) => {
-	if (data === null)
-		return <p className='text-center text-xl p-2'>No hay datos disponibles</p>;
+	if (!Array.isArray(data) || data.length === 0) {
+		return <p className="text-center text-xl p-2">No hay datos disponibles</p>;
+	}
 
-	const columns = Object.keys(data[0])
-		.filter(key => !key.includes("id"))  // Filtrar las claves que contienen 'id'
-		.map(key => ({
-			name: key,  // Traducir el nombre de la columna directamente
-			selector: row => row[key],
-			sortable: true,
+	console.log(data);
+
+	const columns = Object.keys(data[0] || {}).filter((key) => !key.includes("id"))
+		.map((key) => ({
+			field: key,
+			headerName: key,
+			width: 250,
 		}));
 
-	const customStyles = {
-		table: {
-			style: {
-				boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-				borderRadius: '5px',
-				border: '1px solid #e0e0e0',
-			},
-		},
-		rows: {
-			style: {
-				minHeight: '48px',
-				fontSize: '16px',
-			},
-			stripedStyle: {
-				backgroundColor: '#f1f1f1',
-				color: 'black',
-			},
-		},
-		headCells: {
-			style: {
-				paddingLeft: '8px',
-				paddingRight: '8px',
-				fontSize: '16px',
-				fontWeight: 'bold',
-				whiteSpace: 'normal', // Permite que el texto ocupe más de una línea si es necesario
-				wordWrap: 'break-word', // Para permitir que el texto largo se divida en varias líneas
-				overflow: 'visible', // Asegura que el contenido no se corte
-				textOverflow: 'clip', // Evita que el texto se recorte
-				maxWidth: 'none', // Elimina cualquier límite de ancho
-			},
-		},
-		cells: {
-			style: {
-				paddingLeft: '8px',
-				paddingRight: '8px',
-				fontSize: '16px',
-				paddingTop: '8px',
-				paddingBottom: '8px',
-			},
-		},
-		head: {
-			style: {
-				fontSize: '18px',
-				fontWeight: 'bold',
-			},
-		},
-	};
+	const rows = data.map((item, index) => ({ id: index, ...item }));
+
+	const paginationModel = { page: 0, pageSize: 5 };
 
 	return (
-		<DataTable
-			columns={columns}
-			data={data}
-			pagination
-			selectableRows
-			customStyles={customStyles}
-			paginationPerPage={8}
-			paginationRowsPerPageOptions={[5, 8, 10, 15, 20]}
-		/>
+		<Paper sx={{ minHeight: "auto", maxHeight: "auto", width: "100%" }}>
+			<DataGrid
+				rows={rows}
+				columns={columns}
+				initialState={{ pagination: { paginationModel } }}
+				pageSizeOptions={[5, 10, 20]}
+				checkboxSelection
+				localeText={esES.components?.MuiDataGrid?.defaultProps?.localeText}
+				sx={{ border: 0 }}
+			/>
+		</Paper>
 	);
-
 };
 
 export default Table;

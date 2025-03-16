@@ -1,40 +1,38 @@
-import React from 'react';
-import useAxiosCrud from '../hooks/useAxiosCrud';
+import { DataGrid } from "@mui/x-data-grid";
+import { esES } from '@mui/x-data-grid/locales';
+import Paper from '@mui/material/Paper';
 
-const MyComponent = ({ endpoint }) => {
-    const { data, loading, error, get, post, put, remove } = useAxiosCrud();
+const MyComponent = ({ data }) => {
+    if (data === null)
+        return <p className='text-center text-xl p-2'>No hay datos disponibles</p>;
 
-    const fetchData = async () => {
-        await get(endpoint); // Obtiene un post específico
-    };
+    console.log(data);
 
-    const createData = async () => {
-        await post('/posts', { 
-            // Area de codigo para crear un nuevo post
-            title: 'New Post', body: 'This is a new post', userId: 1 
-        });
-    };
+    const columns = Object.keys(data[0])
+    .filter(key => !key.includes("id"))
+    .map(key => ({
+        field: key,
+        headerName: key,
+        width: key.length * 25,
+    }));
 
-    const updateData = async () => {
-        await put('/posts/1', { id: 1, title: 'Updated Post', body: 'This post has been updated', userId: 1 });
-    };
+    const rows = Object.values(data).map(item => item);
 
-    const deleteData = async () => {
-        await remove('/posts/1');
-    };
+    const paginationModel = { page: 0, pageSize: 5 };
 
     return (
-        <div className='gap-2'>
-            <button className='text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700' onClick={fetchData}>Fetch Data</button>
-            <button className='text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700' onClick={createData}>Create Data</button>
-            <button className='text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700' onClick={updateData}>Update Data</button>
-            <button className='text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700' onClick={deleteData}>Delete Data</button>
-
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
-            {data && <pre>{JSON.stringify(data.data, null, 2)}</pre>}
-        </div>
+        <Paper sx={{ minHeight: 'auto', maxHeight: 'auto', width: '100%' }}>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                initialState={{ pagination: { paginationModel } }}
+                pageSizeOptions={[5, 10, 20]}
+                checkboxSelection 
+                localeText={esES.components.MuiDataGrid.defaultProps?.localeText}
+                sx={{ border: 0 }}
+            />
+        </Paper>
     );
-};
+}
 
-export default MyComponent;
+export default MyComponent

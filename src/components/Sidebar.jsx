@@ -25,7 +25,7 @@ const Sidebar = ({ isOpen }) => {
                         <SidebarItem href="/redes" title="Redes" />
                     </DropdownMenu>
                     <DropdownMenu title="Trámites">
-                        <SidebarItem title="Generar traslado" />
+                        <SidebarItem href="/traslados" title="Generar traslado" />
                         <SidebarItem title="Generar envio a taller" />
                         <SidebarItem title="Generar desechos" />
                         <SidebarItem title="Ver trámites" />
