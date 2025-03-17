@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Test from './pages/Test';
 import { Route, Routes } from 'react-router-dom';
 import Container from './pages/Container';
+import LoadFiles from './pages/loadFiles';
 const App = () => {
     // Estado para controlar si el Sidebar está abierto o cerrado
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -50,6 +51,12 @@ const App = () => {
                         <Route path="/usuarios" element={<Container title={"Usuarios"} endpoint={'users'} />} />
                         <Route path="/proveedores" element={<Container title={"Proveedores"} endpoint={'providers'} />} />
                         <Route path="/coordinaciones" element={<Container title={"Coordinaciones Universitarias"} endpoint={'coordinations'} />} />
+
+                        {/* Importar activos */}
+                        <Route path="/carga-activos-plaqueados" element={<LoadFiles title={"Importar activos plaqueados"} endpoint={'activos-plaqueados'} />} />
+                        <Route path="/carga-activos-no-plaqueados" element={<LoadFiles title={"Importar activos no plaqueados"} endpoint={'activos-no-plaqueados'} />} />
+                        <Route path="/carga-reporte-activos-plaqueados" element={<LoadFiles title={"Importar reporte de activos plaqueados"} endpoint={'reporte-activos-plaqueados'} />} />
+                        <Route path="/carga-reporte-activos-no-plaqueados" element={<LoadFiles title={"Importar reporte de activos no plaqueados"} endpoint={'reporte-activos-no-plaqueados'} />} />
 
                     </Routes>
                     {/* Fin rutas de la aplicación */}

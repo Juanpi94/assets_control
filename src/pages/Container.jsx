@@ -32,7 +32,7 @@ const Container = ({ title, endpoint }) => {
         fetchData(); // Recargar los datos después de eliminar un post
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Loading...</div>;
 
     return (
         <div className="flex flex-col mx-4">

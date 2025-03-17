@@ -44,10 +44,10 @@ const Sidebar = ({ isOpen }) => {
                         <SidebarItem href="/coordinaciones" title="Coordinaciones Universitarias" />
                     </DropdownMenu>
                     <DropdownMenu title="Importar">
-                        <SidebarItem title="Activos plaqueados" />
-                        <SidebarItem title="Activos no plaqueados" />
-                        <SidebarItem title="Reporte activos plaqueados" />
-                        <SidebarItem title="Reporte activos no plaqueados" />
+                        <SidebarItem href="/carga-activos-plaqueados" title="Activos plaqueados" />
+                        <SidebarItem href="/carga-activos-no-plaqueados" title="Activos no plaqueados" />
+                        <SidebarItem href="/carga-reporte-activos-plaqueados" title="Reporte activos plaqueados" />
+                        <SidebarItem href="/carga-reporte-activos-no-plaqueados" title="Reporte activos no plaqueados" />
                     </DropdownMenu>
                     <DropdownMenu title="Respaldo">
                         <SidebarItem title="Respaldo activos plaqueados" />

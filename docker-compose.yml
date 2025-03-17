@@ -3,5 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - .:/app  # Sincroniza el código fuente
+      - /app/node_modules  # Evita conflictos con node_modules
     ports:
-      - "90:80"
+      - "5173:5173"  # Mapea el puerto de Vite
+    command: npm run dev -- --host  # Ejecuta Vite en modo desarrollo
