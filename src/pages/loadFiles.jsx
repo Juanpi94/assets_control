@@ -7,7 +7,6 @@ import * as XLSX from "xlsx";
 const LoadFiles = ({ title, endpoint }) => {
     const { data, loading, error, get, post, put, remove } = useAxiosCrud();
     const [isChecked, setIsChecked] = useState(false);
-    const [fileData, setFileData] = useState(null);
 
     const createData = async () => {
         const fileInput = document.getElementById("file_input");
@@ -19,15 +18,13 @@ const LoadFiles = ({ title, endpoint }) => {
         const file = fileInput.files[0];
         const reader = new FileReader();
 
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
             const bufferArray = e.target.result;
             const workbook = XLSX.read(bufferArray, { type: "buffer" });
 
             const sheetName = workbook.SheetNames.includes("Activos General")
-                ? "Activos General"
-                : workbook.SheetNames.includes("Activos_General")
-                    ? "Activos_General"
-                    : null;
+                ? "Activos General" : workbook.SheetNames.includes("Activos_General")
+                ? "Activos_General" : null;
 
             if (!sheetName) {
                 alert("No se encontró la hoja 'Activos General' o 'Activos_General'.");
@@ -37,12 +34,17 @@ const LoadFiles = ({ title, endpoint }) => {
             const worksheet = workbook.Sheets[sheetName];
             const jsonData = XLSX.utils.sheet_to_json(worksheet);
             console.log(jsonData);
-            setFileData(jsonData);
+
+            // Enviar los datos directamente después de procesarlos
+            try {
+                await post(endpoint, "data");
+                alert("Datos subidos con éxito.");
+            } catch (error) {
+                alert("Hubo un error al subir los datos.");
+            }
         };
 
         reader.readAsArrayBuffer(file);
-
-        await post(endpoint, fileData);
     };
 
     if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Loading...</div>;

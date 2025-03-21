@@ -26,11 +26,17 @@ const useAxiosCrud = () => {
   const post = async (endpoint, body) => {
     setLoading(true);
     try {
-      const response = await axios.post(`${baseURL}${endpoint}`, body);
+      const response = await axios.post(`${baseURL}${endpoint}`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // Habilita el envío de cookies en caso de autenticación
+      });
       setData(response.data);
       setError(null);
     } catch (err) {
-      setError(err.message || "Error creating data");
+      console.error("Error en POST:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Error creating data");
     } finally {
       setLoading(false);
     }

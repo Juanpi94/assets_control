@@ -1,32 +1,20 @@
-# Etapa de construcción
-FROM node:20.9.0 AS build
+# Etapa de desarrollo
+FROM node:20.9.0
 
-# Establece el directorio de trabajo
+# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia los archivos de configuración de dependencias
+# Copiar package.json y package-lock.json antes de instalar dependencias
 COPY package.json package-lock.json ./
 
-# Instala las dependencias
+# Instalar las dependencias
 RUN npm install
 
-# Copia el resto del código de la aplicación
+# Copiar el código de la aplicación
 COPY . .
 
-# Construye la aplicación de Vite
-RUN npm run build
+# Exponer el puerto del servidor de Vite
+EXPOSE 5173
 
-# Etapa de producción (Nginx)
-FROM nginx:latest
-
-# Copia el resultado de la construcción al directorio de Nginx
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Cambia los permisos de los archivos
-RUN chmod -R 755 /usr/share/nginx/html
-
-# Configura el archivo Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Exponer puerto
-EXPOSE 80
+# Comando por defecto: ejecutar el servidor de desarrollo
+CMD ["npm", "run", "dev", "--", "--host"]

@@ -53,7 +53,7 @@ const App = () => {
                         <Route path="/coordinaciones" element={<Container title={"Coordinaciones Universitarias"} endpoint={'coordinations'} />} />
 
                         {/* Importar activos */}
-                        <Route path="/carga-activos-plaqueados" element={<LoadFiles title={"Importar activos plaqueados"} endpoint={'activos-plaqueados'} />} />
+                        <Route path="/carga-activos-plaqueados" element={<LoadFiles title={"Importar activos plaqueados"} endpoint={'loadFile'} />} />
                         <Route path="/carga-activos-no-plaqueados" element={<LoadFiles title={"Importar activos no plaqueados"} endpoint={'activos-no-plaqueados'} />} />
                         <Route path="/carga-reporte-activos-plaqueados" element={<LoadFiles title={"Importar reporte de activos plaqueados"} endpoint={'reporte-activos-plaqueados'} />} />
                         <Route path="/carga-reporte-activos-no-plaqueados" element={<LoadFiles title={"Importar reporte de activos no plaqueados"} endpoint={'reporte-activos-no-plaqueados'} />} />
