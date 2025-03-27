@@ -28,6 +28,7 @@ const useAxiosCrud = () => {
     try {
       const response = await axios.post(`${baseURL}${endpoint}`, body, {
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         withCredentials: true, // Habilita el envío de cookies en caso de autenticación
