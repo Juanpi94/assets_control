@@ -1,7 +1,7 @@
 import MyComponent from "../components/MyComponent";
 import Button from "../components/Button";
 import { useEffect } from "react";
-import useAxiosCrud from "../hooks/useAxiosCrud";
+// import useAxiosCrud from "../hooks/useAxiosCrud";
 
 function Test({ title, endpoint }) {
     const { data, loading, error, get, post, put, remove } = useAxiosCrud();
@@ -11,7 +11,7 @@ function Test({ title, endpoint }) {
     }, [endpoint]); // Se ejecuta cuando el componente se monta o cuando el endpoint cambia
 
     const fetchData = async () => {
-        await get(endpoint); // Obtiene los datos del endpoint
+        // await get(endpoint); // Obtiene los datos del endpoint
     };
 
     return (

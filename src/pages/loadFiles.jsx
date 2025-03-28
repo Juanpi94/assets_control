@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import Table from "../components/Table";
-import useAxiosCrud from "../hooks/useAxiosCrud";
+import { api } from "../hooks/axiosClients";
 import Button from "../components/Button";
 import * as XLSX from "xlsx";
 
 const LoadFiles = ({ title, endpoint }) => {
-    const { data, loading, error, get, post, put, remove } = useAxiosCrud();
     const [isChecked, setIsChecked] = useState(false);
 
     const createData = async () => {
@@ -17,14 +16,15 @@ const LoadFiles = ({ title, endpoint }) => {
 
         const file = fileInput.files[0];
         const reader = new FileReader();
+        const columDatas = {};
 
         reader.onload = async (e) => {
             const bufferArray = e.target.result;
-            const workbook = XLSX.read(bufferArray, { type: "buffer" });
+            const workbook = XLSX.read(bufferArray, { type: "array", cellDates: true });
 
             const sheetName = workbook.SheetNames.includes("Activos General")
                 ? "Activos General" : workbook.SheetNames.includes("Activos_General")
-                ? "Activos_General" : null;
+                    ? "Activos_General" : null;
 
             if (!sheetName) {
                 alert("No se encontró la hoja 'Activos General' o 'Activos_General'.");
@@ -32,22 +32,59 @@ const LoadFiles = ({ title, endpoint }) => {
             }
 
             const worksheet = workbook.Sheets[sheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet);
-            console.log(jsonData);
+            const rowData = XLSX.utils.sheet_to_json(worksheet, {
+                header: 1, // Mantener el formato de matriz
+                raw: false, // Permitir conversión automática de fechas
+            });
+            
+            //convierte los campos que contengan el nombre fecha a string 
+            for (let i = 0; i < rowData[0].length; i++) {
+                // Convierte los datos en un array
+                const data = rowData.map((row) => row[i]);
+
+                // Asignar valores al objeto, manejando fechas y símbolos correctamente
+                columDatas[data[0]] = data.slice(1).map((value) => {
+                    if (typeof value === 'string') {
+                        if (value.includes("$") || value.includes("₡")) {
+                            // Borra los espcios en blanco
+                            value = value.replace(/\s/g, '');
+
+                            // Eliminar símbolos $ y ₡ si existen
+                            value = value.replace(/[$₡]/g, '');
+
+                            // Reemplazar comas por puntos
+                            value = value.replace(/,/g, '.');
+
+                            return value;
+                        }
+
+                        // Formatear fecha dd/mm/yyyy a YYYY-MM-DD
+                        if (/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+                            const [day, month, year] = value.split('/');
+                            return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                        }
+                    }
+                    return value;
+                });
+            }
+            // console.log(columDatas);
 
             // Enviar los datos directamente después de procesarlos
             try {
-                await post(endpoint, "data");
+                api.post(endpoint, { data: columDatas, checked: isChecked })
+                .then(data => console.log(data))
+                .catch(error => console.error(error));
+
                 alert("Datos subidos con éxito.");
             } catch (error) {
-                alert("Hubo un error al subir los datos.");
+                alert(" Hubo un error al subir los datos.");
             }
         };
 
         reader.readAsArrayBuffer(file);
     };
 
-    if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Loading...</div>;
+    // if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Loading...</div>;
 
     return (
         <div className="flex flex-col mx-4">

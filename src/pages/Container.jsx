@@ -1,38 +1,70 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../components/Table";
-import useAxiosCrud from '../hooks/useAxiosCrud';
+import { api } from "../hooks/axiosClients";
 import Button from "../components/Button";
 
 const Container = ({ title, endpoint }) => {
-    const { data, loading, error, get, post, put, remove } = useAxiosCrud();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchData();
+        setData([]);  // Limpiar los datos cuando cambie el endpoint
     }, [endpoint]); // Se ejecuta cuando el componente se monta o cuando el endpoint cambia
 
     const fetchData = async () => {
-        await get(endpoint); // Obtiene los datos del endpoint
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await api.get(endpoint);
+            setData(response.data);
+        } catch {
+            setError("Error al obtener datos");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const createData = async () => {
-        await post('/posts', {
-            // Área de código para crear un nuevo post
-            title: 'New Post', body: 'This is a new post', userId: 1
-        });
-        fetchData(); // Recargar los datos después de crear un nuevo post
+        try {
+            await api.post("/posts", {
+                title: "New Post",
+                body: "This is a new post",
+                userId: 1
+            });
+            fetchData();
+        } catch (err) {
+            console.error("Error al crear datos", err);
+        }
     };
 
     const updateData = async () => {
-        await put('/posts/1', { id: 1, title: 'Updated Post', body: 'This post has been updated', userId: 1 });
-        fetchData(); // Recargar los datos después de actualizar un post
+        try {
+            await api.put("/posts/1", {
+                id: 1,
+                title: "Updated Post",
+                body: "This post has been updated",
+                userId: 1
+            });
+            fetchData();
+        } catch (err) {
+            console.error("Error al actualizar datos", err);
+        }
     };
 
     const deleteData = async () => {
-        await remove('/posts/1');
-        fetchData(); // Recargar los datos después de eliminar un post
+        try {
+            await api.delete("/posts/1");
+            fetchData();
+        } catch (err) {
+            console.error("Error al eliminar datos", err);
+        }
     };
 
-    if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Loading...</div>;
+    if (loading) return <div className="text-3xl pb-6 ps-4 font-semibold text-gray-500">Cargando...</div>;
+    // if (error) return <div className="text-3xl pb-6 ps-4 font-semibold text-red-500">{error}</div>;
 
     return (
         <div className="flex flex-col mx-4">

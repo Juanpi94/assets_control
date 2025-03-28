@@ -7,7 +7,7 @@ const Table = ({ data }) => {
 		return <p className="text-center text-xl p-2">No hay datos disponibles</p>;
 	}
 
-	console.log(data);
+	// console.log(data);
 
 	const columns = Object.keys(data[0] || {}).filter((key) => !key.includes("id"))
 		.map((key) => ({
